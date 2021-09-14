@@ -1,0 +1,16 @@
+{% load news_tags %}
+{% get_list_categories as categories %}
+
+{% comment %}
+<div class="list-group">
+    {% for item in categories %}
+        <a href="{{ item.get_absolute_url }}" class="list-group-item list-group-item-action {% if item.pk == category.pk %}active{% endif %}">{{ item.title }}</a>
+    {% endfor %}
+</div>
+
+{% endcomment %}
+
+<!--{{ category }}-->
+{% show_categories active_category_pk=category.pk %}
+
+                
