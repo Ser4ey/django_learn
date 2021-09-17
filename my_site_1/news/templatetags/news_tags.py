@@ -14,3 +14,8 @@ def get_categories():
 def show_categories(active_category_pk='-1'):
     categories = Category.objects.all()
     return {'categories': categories, 'active_category_pk': active_category_pk}
+
+
+
+
+
