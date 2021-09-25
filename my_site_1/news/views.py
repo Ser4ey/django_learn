@@ -19,16 +19,6 @@ class HomeNews(ListView):
         return News.objects.filter(is_published=True)
 
 
-# def index(request):
-#     news = News.objects.all()
-#
-#     context = {
-#             'news': news,
-#             'title': 'Список статей',
-#     }
-#
-#     return render(request=request, template_name='news/index.html', context=context)
-
 class NewsByCategory(ListView):
     model = News
     template_name = 'news/category.html'
@@ -42,6 +32,28 @@ class NewsByCategory(ListView):
 
     def get_queryset(self):
         return News.objects.filter(category_id=self.kwargs['category_id'], is_published=True)
+
+
+class ViewNews(DetailView):
+    model = News
+    context_object_name = 'news_item'
+    template_name = 'news/view_news.html'
+
+
+class CreateNews(CreateView):
+    form_class = NewsForm
+    template_name = 'news/add_news.html'
+
+
+# def index(request):
+#     news = News.objects.all()
+#
+#     context = {
+#             'news': news,
+#             'title': 'Список статей',
+#     }
+#
+#     return render(request=request, template_name='news/index.html', context=context)
 
 
 # def get_category(request, category_id):
@@ -65,17 +77,6 @@ class NewsByCategory(ListView):
 #     }
 #
 #     return render(request=request, template_name='news/view_news.html', context=context)
-
-
-class ViewNews(DetailView):
-    model = News
-    context_object_name = 'news_item'
-    template_name = 'news/view_news.html'
-
-
-class CreateNews(CreateView):
-    form_class = NewsForm
-    template_name = 'news/add_news.html'
 
 
 # def add_news(request):
