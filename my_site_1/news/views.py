@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import News, Category
 from .forms import NewsForm
 
@@ -9,6 +9,9 @@ class HomeNews(ListView):
     model = News
     template_name = 'news/index.html'
     context_object_name = 'news'
+    allow_empty = False
+    paginate_by = 2
+
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -24,6 +27,8 @@ class NewsByCategory(ListView):
     model = News
     template_name = 'news/category.html'
     context_object_name = 'news'
+    allow_empty = False
+    paginate_by = 2
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -42,7 +47,13 @@ class ViewNews(DetailView):
     template_name = 'news/view_news.html'
 
 
-class CreateNews(CreateView):
+class CreateNews(LoginRequiredMixin, CreateView):
+    # переадресация
+    # login_url = '/admin/'
+
+    # error 403
+    raise_exception = True
+
     form_class = NewsForm
     template_name = 'news/add_news.html'
 
