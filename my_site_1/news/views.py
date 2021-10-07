@@ -2,14 +2,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import News, Category
-from .forms import NewsForm
-from django.contrib.auth.forms import UserCreationForm
+from .forms import NewsForm, UserRegisterForm
 from django.contrib import messages
 
 
 def register(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = UserRegisterForm(request.POST)
         if form.is_valid():
             messages.success(request, 'Вы успешно зарегистрировались!')
             form.save()
@@ -17,7 +16,7 @@ def register(request):
         else:
             messages.error(request, 'Ошибка вилидации!')
     else:
-        form = UserCreationForm()
+        form = UserRegisterForm()
     return render(request, 'news/register.html', {'form': form})
 
 
