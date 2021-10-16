@@ -14,7 +14,11 @@
         </ul>
 
         <span class="navbar-text mr-5">
+            {% if request.user.is_authenticated %}
+            Вы вошли как, {{ request.user.username }} | <a href="{% url 'logout' %}">Выйти</a>
+            {% else %}
             <a href="{% url 'register' %}">Register</a> | <a href="{% url 'login' %}">Login</a>
+            {% endif %}
         </span>
     </div>
 </nav>
